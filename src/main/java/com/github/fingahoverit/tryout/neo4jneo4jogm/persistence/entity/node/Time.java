@@ -27,4 +27,11 @@ public class Time {
 		this.time = time;
 	}
 
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("[time:").append(getTime()).append("]");
+
+		return sb.toString();
+	}
 }

@@ -27,4 +27,11 @@ public class Year {
 		this.year = year;
 	}
 
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("[year:").append(getYear()).append("]");
+
+		return sb.toString();
+	}
 }

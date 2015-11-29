@@ -20,10 +20,10 @@ Because it's up tu date with latest Neo4j release and it provides remote connect
 ### Prepare Data
 * with external db injection
 
-1. Install version 2.3.1 of [neo4j](http://neo4j.com/download/)
+1. Install version 2.3.1 of [neo4j](http://neo4j.com/download/) 
 2. Inject scripts : 
 	1. copy all files from /src/main/cypher to C:/temp/neo4j/cypher/ (If you are not on windows, consider change the absolute path of LOAD CSV command on scripts files)
-	2. Run your Neo4J Database
+	2. Run your Neo4J Database (db credentials should be neo4j/password or change credentials in Session_Helper class)
 	3. In your Neo4J Web interface then on the star tab, drag and drop every *.cyp script files
 	4. Run he script by their name order
 3. 5! 5! 5!

@@ -42,4 +42,11 @@ public class Player {
 		this.squadList = squadList;
 	}
 
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("[name:").append(getName()).append("]");
+
+		return sb.toString();
+	}
 }

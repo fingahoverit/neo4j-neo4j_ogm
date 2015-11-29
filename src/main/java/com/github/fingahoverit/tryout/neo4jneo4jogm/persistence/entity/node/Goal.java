@@ -60,4 +60,14 @@ public class Goal {
 		this.goal = goal;
 	}
 
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("[time:").append(getTime()).append("]");
+		sb.append("[matchId:").append(getMatchId()).append("]");
+		sb.append("[playerId:").append(getPlayerId()).append("]");
+		sb.append("[goal:").append(getGoal()).append("]");
+
+		return sb.toString();
+	}
 }
