@@ -1,5 +1,6 @@
 package com.github.fingahoverit.tryout.neo4jneo4jogm;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 
 import org.neo4j.ogm.cypher.Filter;
@@ -27,53 +28,36 @@ public class WorldCupDemo {
 
 		Collection<Country> countryCollection = session.loadAll(Country.class,
 				new Filters().add(new Filter("name", "Paraguay")), 2);
-
+		
 		for (Country country : countryCollection) {
 
-			StringBuilder sb = new StringBuilder();
-			sb.append("Country : ").append(country.toString());
-
-			LOGGER.info(sb.toString());
+			LOGGER.info(MessageFormat.format("Country: {0}", country.toString()));
 
 			for (Squad squad : country.getSquadList()) {
-				sb.setLength(0);
-				sb.append("[-NAMED_SQUAD->").append(squad.toString()).append("]");
-				LOGGER.info(sb.toString());
+			  LOGGER.info(MessageFormat.format("[-NAMED_SQUAD->{0}]", squad.toString()));
 
 				for (WorldCup worldCup : squad.getWorldCupList()) {
-					sb.setLength(0);
-					sb.append("[-FOR_WORLD_CUP->").append(worldCup.toString()).append("]");
-					LOGGER.info(sb.toString());
+				  LOGGER.info(MessageFormat.format("[-FOR_WORLD_CUP->{0}]", worldCup.toString()));
 				}
 			}
 
 			for (Match match : country.getMatchList()) {
-				sb.setLength(0);
-				sb.append("[-PLAYED_IN->").append(match.toString()).append("]");
-				LOGGER.info(sb.toString());
+			  LOGGER.info(MessageFormat.format("[-PLAYED_IN->{0}]", match.toString()));
 
 				for (Country homeCountry : match.getHomeTeamCountryList()) {
-					sb.setLength(0);
-					sb.append("[-HOME_TEAM->").append(homeCountry.toString()).append("]");
-					LOGGER.info(sb.toString());
+				  LOGGER.info(MessageFormat.format("[-HOME_TEAM->{0}]", homeCountry.toString()));
 				}
 
 				for (Country awayCountry : match.getAwayTeamCountryList()) {
-					sb.setLength(0);
-					sb.append("[-AWAY_TEAM->").append(awayCountry.toString()).append("]");
-					LOGGER.info(sb.toString());
+				  LOGGER.info(MessageFormat.format("[-AWAY_TEAM->{0}]", awayCountry.toString()));
 				}
 
 				for (Phase phase : match.getPhaseList()) {
-					sb.setLength(0);
-					sb.append("[-IN_PHASE->").append(phase.toString()).append("]");
-					LOGGER.info(sb.toString());
+				  LOGGER.info(MessageFormat.format("[-IN_PHASE->{0}]", phase.toString()));
 				}
 
 				for (Stadium stadium : match.getStadiumList()) {
-					sb.setLength(0);
-					sb.append("[-PLAYED_IN_STADIUM->").append(stadium.toString()).append("]");
-					LOGGER.info(sb.toString());
+				  LOGGER.info(MessageFormat.format("[-PLAYED_IN_STADIUM->{0}]", stadium.toString()));
 				}
 			}
 
