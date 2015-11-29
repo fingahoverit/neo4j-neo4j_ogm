@@ -12,7 +12,7 @@ import org.neo4j.ogm.annotation.Relationship;
 public class Country {
 
 	@GraphId
-	protected Long id;
+	private Long id;
 
 	private String name;
 
@@ -24,6 +24,9 @@ public class Country {
 
 	@Relationship(type = "NAMED_SQUAD", direction = Relationship.OUTGOING)
 	private List<Squad> squadList = new ArrayList<Squad>();
+
+	@Relationship(type = "PLAYED_IN", direction = Relationship.OUTGOING)
+	private List<Match> matchList = new ArrayList<Match>();
 
 	public Long getId() {
 		return id;
@@ -63,6 +66,14 @@ public class Country {
 
 	public void setSquadList(List<Squad> squadList) {
 		this.squadList = squadList;
+	}
+
+	public List<Match> getMatchList() {
+		return matchList;
+	}
+
+	public void setMatchList(List<Match> matchList) {
+		this.matchList = matchList;
 	}
 
 	public String toString() {
