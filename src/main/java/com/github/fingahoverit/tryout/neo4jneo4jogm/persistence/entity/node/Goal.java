@@ -10,15 +10,15 @@ public class Goal {
 	@GraphId
 	private Long id;
 
-	private Integer time;
+	private String time;
 
 	@Property(name = "match_id")
-	private Integer matchId;
+	private String matchId;
 
 	@Property(name = "player_id")
 	private String playerId;
 
-	private String goal;
+	private String type;
 
 	public Long getId() {
 		return id;
@@ -28,19 +28,19 @@ public class Goal {
 		this.id = id;
 	}
 
-	public Integer getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Integer time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
-	public Integer getMatchId() {
+	public String getMatchId() {
 		return matchId;
 	}
 
-	public void setMatchId(Integer matchId) {
+	public void setMatchId(String matchId) {
 		this.matchId = matchId;
 	}
 
@@ -52,12 +52,12 @@ public class Goal {
 		this.playerId = playerId;
 	}
 
-	public String getGoal() {
-		return goal;
+	public String getType() {
+		return type;
 	}
 
-	public void setGoal(String goal) {
-		this.goal = goal;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String toString() {
@@ -66,7 +66,7 @@ public class Goal {
 		sb.append("[time:").append(getTime()).append("]");
 		sb.append("[matchId:").append(getMatchId()).append("]");
 		sb.append("[playerId:").append(getPlayerId()).append("]");
-		sb.append("[goal:").append(getGoal()).append("]");
+		sb.append("[type:").append(getType()).append("]");
 
 		return sb.toString();
 	}

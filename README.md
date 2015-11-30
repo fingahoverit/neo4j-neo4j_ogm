@@ -32,6 +32,11 @@ Because it's up tu date with latest Neo4j release and it provides remote connect
 Rock 'n Roll!
 
 
+## FAQ
+* Your try-out is not finished, it ask me "How I'll do this?" where is the answer?
+
+ Please check "ninja" directory in "src/main" directory, fully operational Query class are hidden there :)
+
 ## Resources
 * Dataset is from [mneedham's neo4j-worldcup](https://github.com/mneedham/neo4j-worldcup)
 

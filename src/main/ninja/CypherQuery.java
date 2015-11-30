@@ -1,16 +1,21 @@
 package com.github.fingahoverit.tryout.neo4jneo4jogm.demo;
 
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.neo4j.ogm.session.Session;
+import org.neo4j.ogm.session.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Country;
+import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Goal;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Match;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Phase;
+import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Player;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Squad;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Stadium;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.WorldCup;
@@ -83,7 +88,21 @@ public class CypherQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		String query = "MATCH (e:Player) WHERE e.name = {playerName} RETURN e";
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("playerName", "Michel Platini");
+
+		Iterable<Player> playerCollection = session.query(Player.class, query, params);
+
+		for (Player player : playerCollection) {
+
+			LOGGER.info(MessageFormat.format("Player: {0}", player.toString()));
+
+			for (Squad squad : player.getSquadList()) {
+				LOGGER.info(MessageFormat.format("[-IN_SQUAD->{0}]", squad.toString()));
+			}
+		}
 
 		SessionHelper.closeSession();
 	}
@@ -95,7 +114,21 @@ public class CypherQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		String query = "MATCH (e:Player) WHERE e.name =~ {playerName} RETURN e";
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("playerName", "Michel.*");
+
+		Iterable<Player> playerCollection = session.query(Player.class, query, params);
+
+		for (Player player : playerCollection) {
+
+			LOGGER.info(MessageFormat.format("Player: {0}", player.toString()));
+
+			for (Squad squad : player.getSquadList()) {
+				LOGGER.info(MessageFormat.format("[-IN_SQUAD->{0}]", squad.toString()));
+			}
+		}
 
 		SessionHelper.closeSession();
 	}
@@ -107,7 +140,17 @@ public class CypherQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		String queryCreate = "CREATE (g:Goal { time : '60', match_id : '914', player_id : '28528', type : 'cheat' })";
+
+		session.query(queryCreate, Collections.<String, Object> emptyMap());
+
+		// Check goal insertion
+		String queryCheck = "MATCH (g:Goal { player_id : '28528'}) RETURN g";
+		Iterable<Goal> goalCollection = session.query(Goal.class, queryCheck, Collections.<String, Object> emptyMap());
+
+		for (Goal goal : goalCollection) {
+			LOGGER.info(MessageFormat.format("Goal: {0}", goal.toString()));
+		}
 
 		SessionHelper.closeSession();
 	}
@@ -119,7 +162,18 @@ public class CypherQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		// Goal to delete
+		String queryDelete = "MATCH (g:Goal { type : 'cheat' }) DELETE g";
+
+		session.query(queryDelete, Collections.<String, Object> emptyMap());
+
+		// Check goal deletion
+		String queryCheck = "MATCH (g:Goal { player_id : '28528'}) RETURN g";
+		Iterable<Goal> goalCollection = session.query(Goal.class, queryCheck, Collections.<String, Object> emptyMap());
+
+		for (Goal goal : goalCollection) {
+			LOGGER.info(MessageFormat.format("Goal: {0}", goal.toString()));
+		}
 
 		SessionHelper.closeSession();
 	}
@@ -131,7 +185,18 @@ public class CypherQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		String querySet = "MATCH (p:Player) SET p.firstName = SPLIT(p.name, ' ')[0], p.lastName = UPPER(SPLIT(p.name, ' ')[1]) ";
+
+		session.query(querySet, Collections.<String, Object> emptyMap());
+
+		// Check player update
+		String queryCheck = "MATCH (p:Player) RETURN p";
+		Result result = session.query(queryCheck, Collections.<String, Object> emptyMap());
+		Iterator<Map<String, Object>> resultIterator = result.queryResults().iterator();
+
+		while (resultIterator.hasNext()) {
+			LOGGER.info("Player : " + resultIterator.next().toString());
+		}
 
 		SessionHelper.closeSession();
 	}
@@ -143,7 +208,18 @@ public class CypherQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		String queryRemove = "MATCH (p:Player) REMOVE p.firstname, p.lastName ";
+
+		session.query(queryRemove, Collections.<String, Object> emptyMap());
+
+		// Check player update
+		String queryCheck = "MATCH (p:Player) RETURN p";
+		Result result = session.query(queryCheck, Collections.<String, Object> emptyMap());
+		Iterator<Map<String, Object>> resultIterator = result.queryResults().iterator();
+
+		while (resultIterator.hasNext()) {
+			LOGGER.info("Player : " + resultIterator.next().toString());
+		}
 
 		SessionHelper.closeSession();
 	}

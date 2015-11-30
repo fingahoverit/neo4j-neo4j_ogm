@@ -3,6 +3,7 @@ package com.github.fingahoverit.tryout.neo4jneo4jogm.demo;
 import java.text.MessageFormat;
 import java.util.Collection;
 
+import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.neo4j.ogm.session.Session;
@@ -10,8 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Country;
+import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Goal;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Match;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Phase;
+import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Player;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Squad;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Stadium;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.WorldCup;
@@ -81,7 +84,17 @@ public class EntityQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		Collection<Player> playerCollection = session.loadAll(Player.class,
+				new Filters().add(new Filter("name", "Michel Platini")), 1);
+
+		for (Player player : playerCollection) {
+
+			LOGGER.info(MessageFormat.format("Player: {0}", player.toString()));
+
+			for (Squad squad : player.getSquadList()) {
+				LOGGER.info(MessageFormat.format("[-IN_SQUAD->{0}]", squad.toString()));
+			}
+		}
 
 		SessionHelper.closeSession();
 	}
@@ -93,7 +106,18 @@ public class EntityQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		Filter matchFilter = new Filter("name", "Michel.*");
+		matchFilter.setComparisonOperator(ComparisonOperator.MATCHES);
+		Collection<Player> playerCollection = session.loadAll(Player.class, new Filters().add(matchFilter), 1);
+
+		for (Player player : playerCollection) {
+
+			LOGGER.info(MessageFormat.format("Player: {0}", player.toString()));
+
+			for (Squad squad : player.getSquadList()) {
+				LOGGER.info(MessageFormat.format("[-IN_SQUAD->{0}]", squad.toString()));
+			}
+		}
 
 		SessionHelper.closeSession();
 	}
@@ -105,7 +129,21 @@ public class EntityQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		Goal newGoal = new Goal();
+		newGoal.setMatchId("914");
+		newGoal.setPlayerId("28528");
+		newGoal.setTime("60");
+		newGoal.setType("cheat");
+
+		session.save(newGoal);
+
+		// Check goal insertion
+		Filter goalFilter = new Filter("player_id", "28528");
+		Collection<Goal> goalCollection = session.loadAll(Goal.class, new Filters().add(goalFilter), 1);
+
+		for (Goal goal : goalCollection) {
+			LOGGER.info(MessageFormat.format("Goal: {0}", goal.toString()));
+		}
 
 		SessionHelper.closeSession();
 	}
@@ -117,7 +155,21 @@ public class EntityQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		// Goal to delete
+		Collection<Goal> goalToDeleteCollection = session.loadAll(Goal.class,
+				new Filters().add(new Filter("type", "cheat")), 1);
+
+		for (Goal goal : goalToDeleteCollection) {
+			session.delete(goal);
+		}
+
+		// Check goal deletion
+		Collection<Goal> goalCollection = session.loadAll(Goal.class,
+				new Filters().add(new Filter("player_id", "28528")), 1);
+
+		for (Goal goal : goalCollection) {
+			LOGGER.info(MessageFormat.format("Goal: {0}", goal.toString()));
+		}
 
 		SessionHelper.closeSession();
 	}
