@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +12,13 @@ import org.slf4j.LoggerFactory;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Country;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Match;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Phase;
+import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Player;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Squad;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Stadium;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.WorldCup;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.utils.SessionHelper;
 
+@SuppressWarnings("unused")
 public class CypherQuery {
 	/** Logger. */
 	private static Logger LOGGER = LoggerFactory.getLogger(CypherQuery.class);
@@ -96,6 +99,20 @@ public class CypherQuery {
 		Session session = SessionHelper.getSession();
 
 		// How would you do this?
+		// hint : use =~ operator
+
+		SessionHelper.closeSession();
+	}
+	
+	/**
+	 * Load every French Player entity
+	 */
+	public static void loadFrenchPlayers() {
+
+		Session session = SessionHelper.getSession();
+
+		// How would you do this?
+		// hint : 2 relations between Players and Country. add relations to cypher.
 
 		SessionHelper.closeSession();
 	}
@@ -108,6 +125,7 @@ public class CypherQuery {
 		Session session = SessionHelper.getSession();
 
 		// How would you do this?
+		// hint : use CREATE keyword 
 
 		SessionHelper.closeSession();
 	}
@@ -120,6 +138,7 @@ public class CypherQuery {
 		Session session = SessionHelper.getSession();
 
 		// How would you do this?
+		// hint : use DELETE keyword after MATCH 
 
 		SessionHelper.closeSession();
 	}
@@ -132,6 +151,7 @@ public class CypherQuery {
 		Session session = SessionHelper.getSession();
 
 		// How would you do this?
+		// hint : SPLIT(p.name, ' ')[0]
 
 		SessionHelper.closeSession();
 	}
@@ -144,6 +164,7 @@ public class CypherQuery {
 		Session session = SessionHelper.getSession();
 
 		// How would you do this?
+		// hint : use REMOVE keyword after MATCH
 
 		SessionHelper.closeSession();
 	}

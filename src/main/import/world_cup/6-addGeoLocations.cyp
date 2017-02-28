@@ -1,5 +1,5 @@
 // 6-addGeoLocations -> <1s
-LOAD CSV WITH HEADERS FROM "file:///C:/temp/neo4j/cypher/csv/country-capitals.csv" AS line
+LOAD CSV WITH HEADERS FROM "file:///world_cup/csv/country-capitals.csv" AS line
 WITH line, CASE line.CountryName 
 WHEN 'South Korea' THEN ['Korea Republic']
 WHEN 'United Kingdom' THEN ['England', 'Scotland', 'Wales']

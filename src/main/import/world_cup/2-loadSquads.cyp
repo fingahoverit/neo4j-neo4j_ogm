@@ -1,6 +1,6 @@
-// 2-loadSquads -> 45s
+// 2-loadSquads -> 35s
 USING PERIODIC COMMIT 1000
-LOAD CSV WITH HEADERS FROM "file:///C:/temp/neo4j/cypher/csv/squads.csv" AS csvLine
+LOAD CSV WITH HEADERS FROM "file:///world_cup/csv/squads.csv" AS csvLine
 
 MATCH (y:Year {year: toInt(csvLine.year)})<-[:IN_YEAR]-(worldCup),
       (c:Country {name: csvLine.country})

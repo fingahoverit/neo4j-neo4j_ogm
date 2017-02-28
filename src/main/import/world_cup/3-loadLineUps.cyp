@@ -1,6 +1,6 @@
-// 3-loadLineUps -> 5min
+// 3-loadLineUps -> 50s
 USING PERIODIC COMMIT 1000
-LOAD CSV WITH HEADERS FROM "file:///C:/temp/neo4j/cypher/csv/lineups.csv" AS csvLine
+LOAD CSV WITH HEADERS FROM "file:///world_cup/csv/lineups.csv" AS csvLine
 
 MATCH (home)<-[:HOME_TEAM]-(match:Match {id: csvLine.match_id})-[:AWAY_TEAM]->(away)
 MATCH (player:Player {id: csvLine.player_id})

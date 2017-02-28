@@ -1,7 +1,7 @@
 // 1-loadMatches -> 3s
 USING PERIODIC COMMIT 1000
 
-LOAD CSV WITH HEADERS FROM "file:///C:/temp/neo4j/cypher/csv/matches.csv" AS csvLine
+LOAD CSV WITH HEADERS FROM "file:///world_cup/csv/matches.csv" AS csvLine
 
 WITH csvLine, toInt(csvLine.match_number) AS matchNumber 
 

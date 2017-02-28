@@ -3,6 +3,7 @@ package com.github.fingahoverit.tryout.neo4jneo4jogm.demo;
 import java.text.MessageFormat;
 import java.util.Collection;
 
+import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.neo4j.ogm.session.Session;
@@ -12,11 +13,13 @@ import org.slf4j.LoggerFactory;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Country;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Match;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Phase;
+import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Player;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Squad;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.Stadium;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.node.WorldCup;
 import com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.utils.SessionHelper;
 
+@SuppressWarnings("unused")
 public class EntityQuery {
 
 	/** Logger. */
@@ -81,7 +84,10 @@ public class EntityQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		// TODO 01 - use session to load
+		// hint : check loadCountryParaguay
+
+		// TODO 02 - display results
 
 		SessionHelper.closeSession();
 	}
@@ -93,7 +99,10 @@ public class EntityQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		// TODO 01 - use session to load
+		// hint : add ComparisonOperator.MATCHES to filter for regexp
+
+		// TODO 02 - display results
 
 		SessionHelper.closeSession();
 	}
@@ -105,8 +114,13 @@ public class EntityQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		// TODO 01 - create and save a new Goal
+		// hint : set right playerId and type to "cheat"
 
+
+		// TODO 02 - Check last cheat was added 
+		// hint : check loadPlayerMichel
+		
 		SessionHelper.closeSession();
 	}
 
@@ -117,8 +131,11 @@ public class EntityQuery {
 
 		Session session = SessionHelper.getSession();
 
-		// How would you do this?
+		// TODO 01 - delete every goal of type cheat
+		// hint : load them all and call delete on cheat types from session
 
+		// TODO 02 - Check if Goal has been deldeted
+		
 		SessionHelper.closeSession();
 	}
 }

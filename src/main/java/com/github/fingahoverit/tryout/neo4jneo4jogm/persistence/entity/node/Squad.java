@@ -18,6 +18,9 @@ public class Squad {
 	@Relationship(type = "FOR_WORLD_CUP", direction = Relationship.OUTGOING)
 	private List<WorldCup> worldCupList = new ArrayList<WorldCup>();
 
+	@Relationship(type = "NAMED_SQUAD", direction =  Relationship.INCOMING)
+	List<Country> country = new ArrayList<Country>();
+
 	public Long getId() {
 		return id;
 	}
@@ -40,6 +43,14 @@ public class Squad {
 
 	public void setWorldCupList(List<WorldCup> worldCupList) {
 		this.worldCupList = worldCupList;
+	}
+
+	public List<Country> getCountry() {
+		return country;
+	}
+
+	public void setCountry(List<Country> country) {
+		this.country = country;
 	}
 
 	public String toString() {

@@ -1,8 +1,9 @@
 package com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.utils;
 
+import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
-import org.neo4j.ogm.session.transaction.Transaction;
+import org.neo4j.ogm.transaction.Transaction;
 
 public class SessionHelper {
 
@@ -16,7 +17,8 @@ public class SessionHelper {
 	private static String RELATIONSHIP_PACKAGE = "com.github.fingahoverit.tryout.neo4jneo4jogm.persistence.entity.relationship";
 
 	/** URL to Neo4j db. */
-	private static String NEO4J_URL = "http://localhost:7474";
+	private static String NEO4J_DOMAIN = "localhost";
+	private static String NEO4J_PORT = "7474";
 
 	/** User of Neo4j db. */
 	private static String NEO4J_USER = "neo4j";
@@ -36,8 +38,15 @@ public class SessionHelper {
 			synchronized (SessionHelper.class) {
 				// Thread Safe
 				if (SESSION == null) {
-					SessionFactory sessionFactory = new SessionFactory(NODE_PACKAGE);
-					SESSION = sessionFactory.openSession(NEO4J_URL, NEO4J_USER, NEO4J_PASSWORD);
+
+					Configuration configuration = new Configuration();
+					configuration.driverConfiguration()
+							.setDriverClassName("org.neo4j.ogm.drivers.http.driver.HttpDriver").setURI("http://"
+									+ NEO4J_USER + ":" + NEO4J_PASSWORD + "@" + NEO4J_DOMAIN + ":" + NEO4J_PORT + "");
+
+					SessionFactory sessionFactory = new SessionFactory(configuration, NODE_PACKAGE,
+							RELATIONSHIP_PACKAGE);
+					SESSION = sessionFactory.openSession();
 
 					SESSION.beginTransaction();
 				}

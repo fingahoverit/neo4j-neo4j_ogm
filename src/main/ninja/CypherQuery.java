@@ -132,7 +132,30 @@ public class CypherQuery {
 
 		SessionHelper.closeSession();
 	}
+	
+	/**
+	 * Load every French Player entity
+	 */
+	public static void loadFrenchPlayers() {
 
+		Session session = SessionHelper.getSession();
+
+		String query = "MATCH (p:Player) -[:IN_SQUAD]-> () <-[:NAMED_SQUAD]- (c:Country {name:{countryName}}) return p";
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("countryName", "France");
+
+		Iterable<Player> playerCollection = session.query(Player.class, query, params);
+
+		for (Player player : playerCollection) {
+
+			LOGGER.info(MessageFormat.format("Player: {0}", player.toString()));
+		}
+
+		SessionHelper.closeSession();
+	}
+	
+	
 	/**
 	 * Add a cheat goal to Platini
 	 */
